@@ -1,0 +1,24 @@
+apply from: rootProject.file('dependencies.gradle')
+
+subprojects {
+    buildscript {
+        repositories {
+            jcenter()
+        }
+
+        dependencies {
+            classpath rootProject.ext.androidMavenGradlePlugin
+        }
+    }
+
+    repositories {
+        jcenter()
+    }
+
+    group = GROUP
+    version = VERSION_NAME
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

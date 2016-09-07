@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="jp.keita.kagurazaka.filteredobservablecollection.sample.ViewModel"/>
+
+        <import type="me.tatarka.bindingcollectionadapter.LayoutManagers"/>
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/activity_todo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="jp.keita.kagurazaka.filteredobservablecollection.sample.MainActivity">
+
+        <LinearLayout
+            android:id="@+id/layout_bottom_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/text_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="text"
+                android:text="@={viewModel.inputTodoItem.title}"/>
+
+            <Button
+                android:id="@+id/button_add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:onClick="@{viewModel.onAddButtonClicked}"
+                android:text="Add"/>
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinner_view_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:entries="@array/view_mode"
+            android:onItemSelectedListener="@{viewModel.onViewModeChanged}"
+            android:spinnerMode="dropdown"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_todo_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/layout_bottom_area"
+            android:layout_below="@id/spinner_view_mode"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            app:itemView="@{viewModel.itemView}"
+            app:items="@{viewModel.currentList}"
+            app:layoutManager="@{LayoutManagers.linear()}">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+</layout>
