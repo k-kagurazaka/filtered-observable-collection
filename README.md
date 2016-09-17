@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.k-kagurazaka:filtered-observable-collection:1.0.0'
+    compile 'com.github.k-kagurazaka:filtered-observable-collection:1.0.1'
 }
 ```
 
