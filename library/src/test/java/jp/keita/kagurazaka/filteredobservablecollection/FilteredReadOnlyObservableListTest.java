@@ -778,6 +778,20 @@ public class FilteredReadOnlyObservableListTest {
         }
     }
 
+    public static class WithoutObservers {
+        @Rule
+        public ObservableItemListSource rule = new ObservableItemListSource(false);
+
+        @Test
+        public void manipulateWithoutObservers() {
+            FilteredReadOnlyObservableList<ObservableItem> list
+                    = new FilteredReadOnlyObservableList<>(rule.getSource());
+
+            rule.getSource().add(new ObservableItem("add1"));
+            rule.getSource().get(0).setValue("changed");
+        }
+    }
+
     public static class UnsupportedOperation {
         @Rule
         public NonObservableItemListSource rule = new NonObservableItemListSource();

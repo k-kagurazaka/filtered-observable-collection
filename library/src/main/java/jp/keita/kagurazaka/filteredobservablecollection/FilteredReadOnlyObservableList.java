@@ -234,7 +234,9 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
             }
         }
 
-        registry.notifyChanged(this);
+        if (registry != null) {
+            registry.notifyChanged(this);
+        }
     }
 
     private Filter<T> getFilter() {
@@ -285,14 +287,14 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
 
     private void onItemAppeared(int sourceIndex) {
         int index = appearItem(sourceIndex);
-        if (index >= 0) {
+        if (registry != null && index >= 0) {
             registry.notifyInserted(this, index, 1);
         }
     }
 
     private void onItemDisappeared(int sourceIndex) {
         int index = disappearItem(sourceIndex);
-        if (index >= 0) {
+        if (registry != null && index >= 0) {
             registry.notifyRemoved(this, index, 1);
         }
     }
@@ -300,7 +302,9 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
     private void onItemUpdated(int sourceIndex) {
         int index = indexList.get(sourceIndex).index;
         super.set(index, source.get(sourceIndex));
-        registry.notifyChanged(this, index, 1);
+        if (registry != null) {
+            registry.notifyChanged(this, index, 1);
+        }
     }
 
     private void onItemRangeAppeared(final List<Change> changes) {
@@ -316,7 +320,7 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
         }
 
         int notifyCount = notifyIndices.size();
-        if (notifyCount > 0) {
+        if (registry != null && notifyCount > 0) {
             registry.notifyInserted(this, notifyIndices.get(0), notifyCount);
         }
     }
@@ -334,7 +338,7 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
         }
 
         int notifyCount = notifyIndices.size();
-        if (notifyCount > 0) {
+        if (registry != null && notifyCount > 0) {
             registry.notifyRemoved(this, notifyIndices.get(notifyCount - 1), notifyCount);
         }
     }
@@ -351,7 +355,7 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
         }
 
         int notifyCount = notifyIndices.size();
-        if (notifyCount > 0) {
+        if (registry != null && notifyCount > 0) {
             registry.notifyChanged(this, notifyIndices.get(0), notifyCount);
         }
     }
@@ -447,7 +451,7 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
         }
 
         int notifyCount = notifyIndices.size();
-        if (notifyCount > 0) {
+        if (registry != null && notifyCount > 0) {
             registry.notifyInserted(this, notifyIndices.get(0), notifyCount);
         }
     }
@@ -490,7 +494,7 @@ public class FilteredReadOnlyObservableList<T> extends ArrayList<T>
         }
 
         int notifyCount = notifyIndices.size();
-        if (notifyCount > 0) {
+        if (registry != null && notifyCount > 0) {
             registry.notifyRemoved(this, notifyIndices.get(notifyCount - 1), notifyCount);
         }
     }
